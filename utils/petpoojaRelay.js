@@ -3,7 +3,7 @@ const axios = require('axios');
 async function relayOrderToPetpooja(orderData) {
   try {
     console.log(`🚀 Relaying Order ${orderData.id} to Petpooja...`);
-    console.log(`🔗 Callback URL being sent: ${process.env.BASE_URL || 'https://fitgreen-backend.onrender.com'}/api/petpooja/order-status`);
+    console.log(`🔗 Callback URL being sent: ${process.env.BASE_URL || 'https://fitgrrenbackend2.onrender.com'}/api/petpooja/order-status`);
 
     // Aggregated tax details for order level
     const taxMap = {};
@@ -88,7 +88,7 @@ async function relayOrderToPetpooja(orderData) {
               packing_charges: "0.00",
               service_charge: "0.00",
               enable_delivery: 1,
-              callback_url: `${process.env.BASE_URL || 'https://fitgreen-backend.onrender.com'}/api/petpooja/order-status`
+              callback_url: `${process.env.BASE_URL || 'https://fitgrrenbackend2.onrender.com'}/api/petpooja/order-status`
             }
           },
           OrderItem: {
