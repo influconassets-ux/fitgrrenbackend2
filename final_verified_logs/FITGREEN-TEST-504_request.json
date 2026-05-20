@@ -1,0 +1,104 @@
+{
+  "app_key": "HIDDEN",
+  "app_secret": "HIDDEN",
+  "access_token": "HIDDEN",
+  "restID": "f871uxkp",
+  "enable_delivery": "1",
+  "orderinfo": {
+    "OrderInfo": {
+      "Restaurant": {
+        "details": {
+          "res_name": "FitGreen",
+          "address": "Ahmedabad",
+          "contact_information": "9999999999",
+          "restID": "f871uxkp"
+        }
+      },
+      "Customer": {
+        "details": {
+          "name": "Test User",
+          "email": "test@example.com",
+          "phone": "9999999999",
+          "address": "Test Address, Ahmedabad"
+        }
+      },
+      "Order": {
+        "details": {
+          "orderID": "FITGREEN-TEST-504",
+          "clientOrderID": "FITGREEN-TEST-504",
+          "preorder_date": "2026-05-15",
+          "preorder_time": "01:45:00",
+          "advanced_order": "N",
+          "order_type": "H",
+          "payment_type": "ONLINE",
+          "total": "472.50",
+          "tax_total": "22.50",
+          "discount_total": "10.00",
+          "discount_type": "F",
+          "description": "4. Item with Discount + Tax",
+          "created_on": "2026-05-15 01:45:00",
+          "dc_tax_percentage": "0",
+          "pc_tax_percentage": "0",
+          "delivery_charges": "0.00",
+          "packing_charges": "0.00",
+          "service_charge": "0.00",
+          "enable_delivery": "1",
+          "callback_url": "https://fitgreen-backend.onrender.com/api/petpooja/order-status"
+        }
+      },
+      "OrderItem": {
+        "details": [
+          {
+            "id": "10451241",
+            "name": "Veg Thai Curry",
+            "tax_inclusive": false,
+            "item_discount": "10.00",
+            "price": "460.00",
+            "final_price": "450.00",
+            "quantity": "1",
+            "gst_liability": "restaurant",
+            "item_tax": [
+              {
+                "id": "1902",
+                "name": "SGST",
+                "tax_percentage": "2.5",
+                "amount": "11.25"
+              },
+              {
+                "id": "1903",
+                "name": "CGST",
+                "tax_percentage": "2.5",
+                "amount": "11.25"
+              }
+            ],
+            "AddonItem": {
+              "details": []
+            },
+            "variation_id": "",
+            "variation_name": ""
+          }
+        ]
+      },
+      "Tax": {
+        "details": [
+          {
+            "id": "1902",
+            "title": "SGST",
+            "type": "P",
+            "price": "2.5",
+            "tax": "11.25",
+            "restaurant_liable_amt": "11.25"
+          },
+          {
+            "id": "1903",
+            "title": "CGST",
+            "type": "P",
+            "price": "2.5",
+            "tax": "11.25",
+            "restaurant_liable_amt": "11.25"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "app_key": "pu6hrb21iknxv08edotwmy9csj5qa7z4",
+  "app_secret": "d04bacabdb237a63b7097d1540b71a3c8368a0b4",
+  "access_token": "0b448750bef20fb9ad676f69ea43af22a7167dc2",
+  "restID": "f871uxkp",
+  "orderinfo": {
+    "OrderInfo": {
+      "Restaurant": {
+        "details": {
+          "res_name": "FitGreen",
+          "address": "Ahmedabad",
+          "contact_information": "9999999999",
+          "restID": "f871uxkp"
+        }
+      },
+      "Customer": {
+        "details": {
+          "name": "Verified Tester",
+          "email": "test@example.com",
+          "phone": "9999999999",
+          "address": "Test Address, Ahmedabad"
+        }
+      },
+      "Order": {
+        "details": {
+          "orderID": "FITGREEN-VERIFIED-1778942783848",
+          "clientOrderID": "FITGREEN-VERIFIED-1778942783848",
+          "preorder_date": "2026-05-16",
+          "preorder_time": "12:30:00",
+          "advanced_order": "N",
+          "order_type": "H",
+          "payment_type": "ONLINE",
+          "total": "472.50",
+          "tax_total": "22.50",
+          "discount_total": "10.00",
+          "discount_type": "F",
+          "description": "Verified Scenario: Item with Addon and Variation + Tax + Discount",
+          "created_on": "2026-05-16 12:30:00",
+          "dc_tax_percentage": "0",
+          "pc_tax_percentage": "0",
+          "delivery_charges": "0.00",
+          "packing_charges": "0.00",
+          "service_charge": "0.00",
+          "enable_delivery": 1,
+          "callback_url": "https://fitgreen-backend.onrender.com/api/petpooja/order-status"
+        }
+      },
+      "OrderItem": {
+        "details": [
+          {
+            "id": "10451241",
+            "name": "Veg Thai Curry",
+            "tax_inclusive": false,
+            "item_discount": "10.00",
+            "price": "460.00",
+            "final_price": "450.00",
+            "quantity": "1",
+            "gst_liability": "restaurant",
+            "variation_id": "6779",
+            "variation_name": "With Rice",
+            "item_tax": [
+              {
+                "id": "1902",
+                "name": "SGST",
+                "tax_percentage": "2.5",
+                "amount": "11.25"
+              },
+              {
+                "id": "1903",
+                "name": "CGST",
+                "tax_percentage": "2.5",
+                "amount": "11.25"
+              }
+            ],
+            "AddonItem": {
+              "details": [
+                {
+                  "id": "23034",
+                  "name": "Red",
+                  "group_name": "Thai Curry Flavour",
+                  "group_id": 7502,
+                  "price": "30.00",
+                  "quantity": "1"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "Tax": {
+        "details": [
+          {
+            "id": "1902",
+            "title": "SGST",
+            "type": "P",
+            "price": "2.5",
+            "tax": "11.25",
+            "restaurant_liable_amt": "11.25"
+          },
+          {
+            "id": "1903",
+            "title": "CGST",
+            "type": "P",
+            "price": "2.5",
+            "tax": "11.25",
+            "restaurant_liable_amt": "11.25"
+          }
+        ]
+      }
+    }
+  }
+}
