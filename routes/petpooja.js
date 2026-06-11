@@ -389,8 +389,13 @@ router.post('/item-on', async (req, res) => {
 
 // 4. GET STORE STATUS WEBHOOK
 router.post('/get-store-status', (req, res) => {
-  const status = req.app.locals.storeStatus === 1 ? 'OPEN' : 'CLOSED';
-  res.status(200).json({ status: status });
+  const storeStatusStr = req.app.locals.storeStatus === 1 ? '1' : '0';
+  res.status(200).json({ 
+    status: "success",
+    store_status: storeStatusStr,
+    http_code: "200",
+    message: "Store status fetched successfully"
+  });
 });
 
 // 5. UPDATE STORE STATUS WEBHOOK
@@ -424,7 +429,14 @@ router.post('/update-store-status', (req, res) => {
   } else {
     console.warn('⚠️ Store status update received but no status field found in payload');
   }
-  res.status(200).json({ success: '1', message: 'Store status updated' });
+  
+  const storeStatusStr = req.app.locals.storeStatus === 1 ? '1' : '0';
+  res.status(200).json({ 
+    status: "success",
+    store_status: storeStatusStr,
+    http_code: "200",
+    message: "Store status updated successfully"
+  });
 });
 
 // 6. ORDER STATUS CALLBACK (Step 1 & 4)
