@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 
 async function relayOrderToPetpooja(orderData) {
   try {
@@ -142,8 +143,19 @@ async function relayOrderToPetpooja(orderData) {
 
     const saveOrderUrl = process.env.PETPOOJA_SAVE_ORDER_URL || 'https://qle1yy2ydc.execute-api.ap-southeast-1.amazonaws.com/V1/save_order';
     
+    let axiosConfig = {};
+    if (process.env.PROXY_URL) {
+      console.log('🔒 Routing Petpooja relay request through static proxy...');
+      const agent = new HttpsProxyAgent(process.env.PROXY_URL);
+      axiosConfig = {
+        httpsAgent: agent,
+        httpAgent: agent,
+        proxy: false
+      };
+    }
+
     console.log('📡 Sending Payload to Petpooja:', JSON.stringify(petpoojaPayload, null, 2));
-    const petpoojaRes = await axios.post(saveOrderUrl, petpoojaPayload);
+    const petpoojaRes = await axios.post(saveOrderUrl, petpoojaPayload, axiosConfig);
     console.log('✅ Petpooja Relay Response:', petpoojaRes.data);
     return petpoojaRes.data;
   } catch (error) {

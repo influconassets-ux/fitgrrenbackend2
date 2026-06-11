@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 const router = express.Router();
 
 const Restaurant = require('../models/Restaurant');
@@ -39,8 +40,7 @@ function normalizePetpoojaStatus(status) {
   return map[value] || value;
 }
 
-// Store Status Variable (in-memory for now, could be DB)
-let storeStatus = "OPEN";
+// Store Status is managed in app.locals in index.js
 
 // --- FRONTEND MENU APIs ---
 // Grouped Menu for Frontend
@@ -389,14 +389,40 @@ router.post('/item-on', async (req, res) => {
 
 // 4. GET STORE STATUS WEBHOOK
 router.post('/get-store-status', (req, res) => {
-  res.status(200).json({ status: storeStatus });
+  const status = req.app.locals.storeStatus === 1 ? 'OPEN' : 'CLOSED';
+  res.status(200).json({ status: status });
 });
 
 // 5. UPDATE STORE STATUS WEBHOOK
 router.post('/update-store-status', (req, res) => {
-  const { status } = req.body;
-  if (status) {
-    storeStatus = status; // OPEN, CLOSED, BUSY
+  console.log('Received Petpooja Store Status Update Webhook:', JSON.stringify(req.body));
+  
+  // Save raw payload to DB for debugging
+  const mongoose = require('mongoose');
+  const db = mongoose.connection;
+  db.collection('webhooklogs').insertOne({ 
+    timestamp: new Date(), 
+    type: 'store_status_update', 
+    payload: req.body 
+  }).catch(err => console.error('Failed to log webhook:', err));
+
+  // Petpooja might send 'status' or 'store_status'
+  const rawStatus = req.body.status !== undefined ? req.body.status : req.body.store_status;
+
+  if (rawStatus !== undefined) {
+    // Normalize status to 1 or 0
+    const normalized = String(rawStatus).toUpperCase() === 'OPEN' || String(rawStatus) === '1' ? 1 : 0;
+    req.app.locals.storeStatus = normalized;
+    
+    console.log(`✅ Store Status updated to: ${normalized === 1 ? 'ON/OPEN' : 'OFF/CLOSED'}`);
+
+    // Emit real-time update via socket.io
+    const io = req.app.get('socketio');
+    if (io) {
+      io.to('admin-room').emit('storeStatusUpdate', { status: normalized });
+    }
+  } else {
+    console.warn('⚠️ Store status update received but no status field found in payload');
   }
   res.status(200).json({ success: '1', message: 'Store status updated' });
 });
@@ -572,7 +598,19 @@ router.post('/update-order-status', async (req, res) => {
     };
 
     const updateUrl = process.env.PETPOOJA_UPDATE_ORDER_URL || 'https://qle1yy2ydc.execute-api.ap-southeast-1.amazonaws.com/V1/update_order_status';
-    const petpoojaRes = await axios.post(updateUrl, payload);
+    
+    let axiosConfig = {};
+    if (process.env.PROXY_URL) {
+      console.log('🔒 Routing Petpooja status update through static proxy...');
+      const agent = new HttpsProxyAgent(process.env.PROXY_URL);
+      axiosConfig = {
+        httpsAgent: agent,
+        httpAgent: agent,
+        proxy: false
+      };
+    }
+
+    const petpoojaRes = await axios.post(updateUrl, payload, axiosConfig);
     
     // Update local DB as well
     await Order.findOneAndUpdate(

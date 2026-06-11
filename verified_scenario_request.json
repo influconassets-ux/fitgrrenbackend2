@@ -23,9 +23,9 @@
       },
       "Order": {
         "details": {
-          "orderID": "FITGREEN-VERIFIED-1778942783848",
-          "clientOrderID": "FITGREEN-VERIFIED-1778942783848",
-          "preorder_date": "2026-05-16",
+          "orderID": "FITGREEN-VERIFIED-1779279334955",
+          "clientOrderID": "FITGREEN-VERIFIED-1779279334955",
+          "preorder_date": "2026-05-20",
           "preorder_time": "12:30:00",
           "advanced_order": "N",
           "order_type": "H",
@@ -35,7 +35,7 @@
           "discount_total": "10.00",
           "discount_type": "F",
           "description": "Verified Scenario: Item with Addon and Variation + Tax + Discount",
-          "created_on": "2026-05-16 12:30:00",
+          "created_on": "2026-05-20 12:30:00",
           "dc_tax_percentage": "0",
           "pc_tax_percentage": "0",
           "delivery_charges": "0.00",

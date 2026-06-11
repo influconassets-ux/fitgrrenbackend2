@@ -88,6 +88,66 @@ const Tip = require('./models/Tip');
 const CorporateOrder = require('./models/CorporateOrder');
 const CorporateClient = require('./models/CorporateClient');
 
+// --- STORE STATUS ---
+app.locals.storeStatus = 1; // 1 = ON, 0 = OFF
+
+app.get('/api/store/status', (req, res) => {
+  res.status(200).json({ success: true, status: req.app.locals.storeStatus });
+});
+
+app.post('/api/store/toggle', async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (status !== 0 && status !== 1) {
+      return res.status(400).json({ success: false, message: 'Invalid status. Must be 0 or 1.' });
+    }
+
+    const restID = 'f871uxkp';
+
+    const payload = {
+      restID: restID,
+      store_status: status
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'app_key': process.env.PETPOOJA_APP_KEY,
+      'app_secret': process.env.PETPOOJA_APP_SECRET
+    };
+
+    let axiosConfig = { headers };
+    
+    // Add proxy support if needed
+    const { HttpsProxyAgent } = require('https-proxy-agent');
+    if (process.env.PROXY_URL) {
+      const agent = new HttpsProxyAgent(process.env.PROXY_URL);
+      axiosConfig.httpsAgent = agent;
+      axiosConfig.httpAgent = agent;
+      axiosConfig.proxy = false;
+    }
+
+    // Use dynamic import or require for axios since it's not at the top level
+    const axios = require('axios');
+    const petpoojaRes = await axios.post(
+      'https://api.petpooja.com/v1/store/status',
+      payload,
+      axiosConfig
+    );
+
+    // Update local state and emit real-time event to connected admin clients
+    req.app.locals.storeStatus = status;
+    const io = req.app.get('socketio');
+    if (io) {
+      io.to('admin-room').emit('storeStatusUpdate', { status });
+    }
+    
+    res.status(200).json({ success: true, message: `Store status updated to ${status === 1 ? 'ON' : 'OFF'}`, data: petpoojaRes.data });
+  } catch (err) {
+    console.error('Error toggling store status:', err.response ? err.response.data : err.message);
+    res.status(500).json({ success: false, error: err.response ? err.response.data : err.message });
+  }
+});
+
 // --- PETPOOJA INTEGRATION ---
 const petpoojaRoutes = require('./routes/petpooja');
 app.use('/api/petpooja', petpoojaRoutes);
