@@ -228,7 +228,7 @@ router.post('/menu', async (req, res) => {
             { 
               restaurantId: firstRest.restaurantid, 
               restaurantName: details.restaurantname || 'FitGreen', 
-              mappingCode: details.menusharingcode || 'f871uxkp' 
+              mappingCode: details.menusharingcode || 'tvjwdbz30q' 
             },
             { upsert: true }
           );
@@ -603,7 +603,7 @@ router.post('/update-order-status', async (req, res) => {
       app_key: process.env.PETPOOJA_APP_KEY,
       app_secret: process.env.PETPOOJA_APP_SECRET,
       access_token: process.env.PETPOOJA_ACCESS_TOKEN,
-      restID: 'f871uxkp',
+      restID: 'tvjwdbz30q',
       orderID: orderID,
       status: status, // typically '7' for cancelled, etc. depending on Petpooja status codes
       cancel_reason: cancel_reason || 'Cancelled by user'

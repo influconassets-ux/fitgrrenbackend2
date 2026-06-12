@@ -102,7 +102,7 @@ app.post('/api/store/toggle', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid status. Must be 0 or 1.' });
     }
 
-    const restID = 'f871uxkp';
+    const restID = 'tvjwdbz30q';
 
     const payload = {
       restID: restID,

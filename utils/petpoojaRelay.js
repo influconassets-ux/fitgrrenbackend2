@@ -49,7 +49,7 @@ async function relayOrderToPetpooja(orderData) {
       app_key: process.env.PETPOOJA_APP_KEY,
       app_secret: process.env.PETPOOJA_APP_SECRET,
       access_token: process.env.PETPOOJA_ACCESS_TOKEN,
-      restID: 'f871uxkp',
+      restID: 'tvjwdbz30q',
       orderinfo: {
         OrderInfo: {
           Restaurant: {
@@ -57,7 +57,7 @@ async function relayOrderToPetpooja(orderData) {
               res_name: "FitGreen",
               address: "Ahmedabad",
               contact_information: "9999999999",
-              restID: "f871uxkp"
+              restID: "tvjwdbz30q"
             }
           },
           Customer: {
